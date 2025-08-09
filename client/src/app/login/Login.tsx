@@ -38,7 +38,7 @@ const Login = () => {
       return;
     }
     fetch(
-      "https://h150bglm1c.execute-api.us-east-1.amazonaws.com/dev/auth/login",
+      "https://av7exfnoz1.execute-api.us-east-1.amazonaws.com/dev/auth/login",
       {
         method: "POST",
         headers: {

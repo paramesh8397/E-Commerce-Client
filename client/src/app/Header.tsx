@@ -1,17 +1,21 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { useAppSelector } from "@/lib/store";
+import { clearCart } from "@/lib/cartslice";
+import { useAppDispatch, useAppSelector } from "@/lib/store";
 import { ShoppingCart } from "lucide-react";
+import { clearAllModuleContexts } from "next/dist/server/lib/render-server";
 import { useState } from "react";
 
 const Header = () => {
   const cart = useAppSelector((state) => state.cart);
   const [showCart, setShowCart] = useState(false);
+  const dispatch = useAppDispatch();
 
   return (
     <div className="flex justify-between p-4">
-      <p>Menu</p>
+      <p>Moes</p>
       <Dialog>
         <DialogTrigger asChild>
           <div
@@ -28,7 +32,7 @@ const Header = () => {
           {cart?.items?.length > 0 ? (
             <div>
               {cart?.items?.map((item) => (
-                <div className="flex items-center gap-2" key={item.id}>
+                <div className="flex items-center gap-2" key={item.product_id}>
                   <img
                     src={item.imageUrl}
                     alt={item.name}
@@ -39,6 +43,16 @@ const Header = () => {
                   <p>Quantity:{item.quantity}</p>
                 </div>
               ))}
+              <div className="flex gap-3">
+                <Button>Checkout</Button>
+                <Button
+                  onClick={() => {
+                    dispatch(clearCart());
+                  }}
+                >
+                  Clear cart
+                </Button>
+              </div>
             </div>
           ) : (
             <div>No items found</div>
